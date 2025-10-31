@@ -421,7 +421,29 @@
     @media (max-width: 480px) {
       .cafe-title { font-size: 2.4rem; }
     }
-
+    .cafe-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .en-text {
+      display: inline-block;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    
+    @media (max-width: 380px) {
+      .cafe-title { font-size: 2.4rem !important; }
+    }
+    
+    @media (max-width: 340px) {
+      .cafe-title { font-size: 2.1rem !important; }
+    }
+    
   </style>
 </head>
 <body>
@@ -851,7 +873,7 @@
 </main>
 
 <footer>
-  <p>© ۱۴۰۴ Caffè Carmo – همه حقوق محفوظ است.</p>
+  <p>© Cafe Carmo 2025</p>
 </footer>
 
 <script>
