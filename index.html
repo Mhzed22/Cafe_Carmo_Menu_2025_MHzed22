@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منو | Caffè Carmo</title>
+
+  <!-- فونت‌های فارسی -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&family=Yekan+Bakh:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #F5F5F5;
+      --accent: #D4AF37;
+      --bg: #0F0F0F;
+      --card: rgba(30, 30, 30, 0.85);
+      --text: #E0E0E0;
+      --light: #AAAAAA;
+      --border: rgba(212, 175, 55, 0.2);
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      padding: 2.5rem 1rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== هدر و لوگو ===== */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+    }
+
+    .logo-container {
+      display: inline-block;
+      padding: 1.5rem;
+      background: rgba(20, 20, 20, 0.8);
+      border: 3px solid var(--accent);
+      border-radius: 50%; /* کاملاً دایره‌ای */
+      box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s ease;
+      animation: float 5s ease-in-out infinite;
+      backdrop-filter: blur(10px);
+      overflow: hidden; /* مهم: برای گرد کردن تصویر داخل */
+    }
+
+    .logo-container:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow:
+        0 0 50px rgba(212, 175, 55, 0.5),
+        0 20px 50px rgba(0, 0, 0, 0.4);
+      border-color: #E8C66A;
+    }
+
+    .logo {
+      width: 380px;        /* سایز دلخواه */
+      height: 380px;       /* ارتفاع = عرض → دایره کامل */
+      object-fit: contain; /* تصویر کامل و بدون کشیدگی */
+      display: block;
+      border-radius: 50%;  /* تصویر هم گرد بشه */
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.4));
+      transition: transform 0.4s ease;
+      background: transparent;
+    }
+
+    .logo:hover {
+      transform: scale(1.06);
+    }
+
+    h1 {
+      font-family: 'Yekan Bakh', sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      color: var(--primary);
+      margin-top: 1.5rem;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(1deg); }
+    }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 768px) {
+      .logo {
+        width: 220px;
+        height: 220px;
+      }
+      .logo-container { padding: 1.3rem; }
+      h1 { font-size: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        width: 180px;
+        height: 180px;
+      }
+      .logo-container { padding: 1rem; }
+      h1 { font-size: 1.7rem; }
+    }
+
+    /* ===== تب‌ها ===== */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: .8rem;
+    }
+
+    .tabs-container {
+      margin: 2.5rem 0;
+      padding: 0 1rem;
+    }
+
+    .tabs-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* کلیدی! */
+      gap: 1rem;
+      justify-content: center;
+      padding: 1rem 0;
+    }
+
+    .tab-button {
+      width: 100%;                     /* عرض کامل ستون */
+      min-height: 56px;                /* ارتفاع یکسان */
+      background: rgba(40, 40, 40, 0.7);
+      border: 2px solid transparent;
+      color: var(--light);
+      font-family: 'Yekan Bakh', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 0.8rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .tab-button span {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* افکت طلایی */
+    .tab-button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), transparent);
+      border-radius: 50px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+
+    .tab-button::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+    }
+
+    /* هاور */
+    .tab-button:hover {
+      color: #FFFFFF;
+      border-color: rgba(212, 175, 55, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+    }
+
+    .tab-button:hover::before { opacity: 1; }
+    .tab-button:hover::after { width: 60%; }
+
+    /* فعال */
+    .tab-button.active {
+      color: #FFFFFF;
+      background: rgba(212, 175, 55, 0.2);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .tab-button.active::after {
+      width: 80%;
+      height: 4px;
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.8);
+    }
+
+    /* انیمیشن ورود */
+    .tab-button {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeInUp 0.5s ease forwards;
+      animation-delay: calc(0.08s * var(--i));
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== محتوای تب ===== */
+    .tab-content {
+      display: none;
+      animation: fadeIn .5s ease;
+    }
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== کارت‌های منو ===== */
+    /* ===== کارت‌های منو - نسخه جدید ===== */
+    .menu-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(2, 1fr); /* همیشه 2 ستون */
+      justify-content: center;
+      padding: 0 1.5rem;
+      margin: 0 auto;
+      max-width: 1400px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: all .4s ease;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      min-height: 420px; /* ارتفاع یکسان */
+    }
+
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow:
+        0 25px 50px rgba(0,0,0,.45),
+        0 0 35px rgba(212, 175, 55, 0.2);
+      border-color: var(--accent);
+    }
+
+    .card-img {
+      height: 260px; /* تصویر بزرگ‌تر */
+      object-fit: cover;
+      width: 100%;
+      transition: transform .5s ease;
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.08);
+    }
+
+    .card-body {
+      padding: 1.6rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: #FFFFFF;
+      text-shadow: 0 1px 4px rgba(0,0,0,.4);
+    }
+
+    .card-desc {
+      font-size: 1.05rem;
+      color: var(--light);
+      line-height: 1.7;
+      flex-grow: 1;
+    }
+
+    .card-price {
+      font-family: 'Yekan Bakh', sans-serif;
+      font-weight: 700;
+      font-size: 1.55rem;
+      color: var(--accent);
+      align-self: flex-end;
+      text-shadow: 0 1px 5px rgba(0,0,0,.5);
+    }
+
+    /* ===== کارت‌ها در موبایل (بهینه) ===== */
+    @media (max-width: 768px) {
+      .menu-grid {
+        gap: 1.8rem;
+        padding: 0 1rem;
+      }
+
+      .card {
+        min-height: 460px;           /* ارتفاع یکسان و کافی */
+        border-radius: 20px;
+      }
+
+      .card-img {
+        height: 240px;               /* عکس بزرگ و واضح */
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .card-body {
+        padding: 1.4rem 1.6rem;
+        gap: 0.7rem;
+      }
+
+      .card-title {
+        font-size: 1.35rem;
+        line-height: 1.4;
+      }
+
+      .card-desc {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .card-price {
+        font-size: 1.45rem;
+      }
+    }
+
+    /* ===== فوتر ===== */
+    footer {
+      text-align: center;
+      margin-top: 5rem;
+      padding: 2rem 0;
+      color: #777777;
+      font-size: .9rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 768px) {
+      .logo { width: 220px; }
+      .logo-container { padding: 1.4rem; }
+      h1 { font-size: 2rem; }
+      .tab-button { font-size: 1.05rem; padding: .8rem 1.3rem; }
+    }
+
+    @media (max-width: 480px) {
+      .logo { width: 180px; }
+      .logo-container { padding: 1.2rem; }
+      h1 { font-size: 1.7rem; }
+      .card-img { height: 180px; }
+      .menu-grid { gap: 1.4rem; }
+    }
+
+    .cafe-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3.2rem;
+      color: var(--accent);
+      margin: 1.8rem 0;
+      letter-spacing: 2px;
+      text-align: center;
+      text-shadow: 0 3px 10px rgba(0,0,0,.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cafe-title::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      transform: translate(-50%, -50%);
+      animation: lineGlow 2s ease-in-out infinite;
+    }
+
+    .letter {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes lineGlow {
+      0%, 100% { width: 0; opacity: 0.5; }
+      50% { width: 80%; opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .cafe-title { font-size: 2.4rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="img/logo.jpg" alt="Caffè Carmo Logo" class="logo">
+  </div>
+  <h1 class="cafe-title">
+  <span dir="ltr" class="en-text">
+    <span class="letter">C</span><span class="letter">a</span><span class="letter">f</span><span class="letter">e</span>
+    <span class="letter"> </span>
+    <span class="letter">C</span><span class="letter">a</span><span class="letter">r</span><span class="letter">m</span><span class="letter">o</span>
+    <span class="letter"> </span>
+    <span class="letter">M</span><span class="letter">e</span><span class="letter">n</span><span class="letter">u</span>
+  </span>
+  </h1>
+</header>
+
+<!-- تب‌ها -->
+<div class="tabs">
+  <button class="tab-button active" data-tab="shake">شیک</button>
+  <button class="tab-button" data-tab="espersso">اسپرسو</button>
+  <button class="tab-button" data-tab="espersso-brand">اسپرسو (برند)</button>
+  <button class="tab-button" data-tab="hot-coffee">بار گرم (برپایه اسپرسو)</button>
+  <button class="tab-button" data-tab="ice-coffee">بار سرد (برپایه اسپرسو)</button>
+  <button class="tab-button" data-tab="hot-drinks">بار گرم</button>
+  <button class="tab-button" data-tab="cold-drinks">ماکتیل</button>
+</div>
+
+<main>
+  <div id="shake" class="tab-content active">
+    <div class="menu-grid">
+      <article class="card">
+        <img src="img/shakes.jpg" alt="شیک نوتلا" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">شیک نوتلا</div>
+          <p class="card-desc">نوتلا، شیر، بستنی وانیلی، یخ</p>
+          <div class="card-price">۲۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/shakes.jpg" alt="شیک اورئو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">شیک اورئو</div>
+          <p class="card-desc">بیسکویت اورئو، شیر، بستنی وانیلی، یخ</p>
+          <div class="card-price">۱۸۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/shakes.jpg" alt="شیک شکلات" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">شیک شکلات</div>
+          <p class="card-desc">شکلات تلخ، شیر، بستنی شکلاتی، یخ</p>
+          <div class="card-price">۱۵۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/shakes.jpg" alt="شیک بادام زمینی" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">شیک بادام زمینی</div>
+          <p class="card-desc">کره بادام زمینی، شکلات، شیر، بستنی، یخ</p>
+          <div class="card-price">۱۹۵٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- تب: قهوه داغ -->
+  <div id="espersso" class="tab-content">
+    <div class="menu-grid">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="اسپرسو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">۱۰۰ روبوستا</div>
+          <p class="card-desc">شات غلیظ قهوه عربیکا با کرمای طلایی و عطر بی‌نظیر</p>
+          <div class="card-price">۶۰٬۰۰۰ - ۷۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="اسپرسو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">۸۰ روبوستا</div>
+          <p class="card-desc">شات غلیظ قهوه عربیکا با کرمای طلایی و عطر بی‌نظیر</p>
+          <div class="card-price">۷۰٬۰۰۰ - ۶۵٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="اسپرسو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">۷۰ روبوستا</div>
+          <p class="card-desc">شات غلیظ قهوه عربیکا با کرمای طلایی و عطر بی‌نظیر</p>
+          <div class="card-price">۷۵٬۰۰۰ - ۶۵٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="اسپرسو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">۵۰ روبوستا</div>
+          <p class="card-desc">شات غلیظ قهوه عربیکا با کرمای طلایی و عطر بی‌نظیر</p>
+          <div class="card-price">۸۵٬۰۰۰ - ۷۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="hot-coffee" class="tab-content">
+    <div class="menu-grid">
+
+      <article class="card">
+        <img src="img/hot-coffee.png" alt="کاپوچینو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">کاپوچینو</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/hot-coffee.png" alt="لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">لاته</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/hot-coffee.png" alt="آمریکانو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آمریکانو</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/hot-coffee.png" alt="ماکیاتو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">ماکیاتو</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۲۰٬۰۰۰ تومان</div>
+        </div>
+        </article>
+
+        <article class="card">
+        <img src="img/hot-coffee.png" alt="موکا" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">موکا</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۲۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="espersso-brand" class="tab-content">
+    <div class="menu-grid">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="Joker" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">جوکر | Joker</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="کاپوچینو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">مامالوچیا | Mamma Lucia</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="Amico" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آمیکوآبی | Amico Blue</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="Amico" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آمیکو قرمز | Amico Red</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="کاپوچینو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">هاوایی زرد | Haway Yellow</div>
+          <p class="card-desc">اسپرسو، شیر بخار، فوم نرم</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="ice-coffee" class="tab-content">
+    <div class="menu-grid">
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آیس آمریکانو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آیس آمریکانو</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آیس لاته</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۲۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آیس لاته زعفرانی" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آیس لاته زعفرانی</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۶۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آیس موکا" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آیس موکا</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۴۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آیس ماچا" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آیس ماچا</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۵۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="فراپاچینو کارامل" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">فراپاچینو کارامل</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۲۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="پینک اسپرسو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">پینک اسپرسو</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۸۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/ice-coffee.png" alt="آفوگاتو" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">آفوگاتو</div>
+          <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- تب: ماکتیل -->
+  <div id="cold-drinks" class="tab-content">
+    <div class="menu-grid">
+      <article class="card">
+        <img src="img/mohito.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">موهیتو</div>
+          <p class="card-desc">نعنا، لیمو، سودا، یخ</p>
+          <div class="card-price">۱۴۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/red-mohito.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">رد موهیتو</div>
+          <p class="card-desc">توت فرنگی، نعنا، لیمو، سودا، یخ</p>
+          <div class="card-price">۱۵۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/orange-blackberry.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">اورنج بلک بری</div>
+          <p class="card-desc">پرتقال، بلک بری، لیمو، سودا، یخ</p>
+          <div class="card-price">۱۷۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/limonade.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">لیموناد</div>
+          <p class="card-desc">لیمو، شکر، آب، یخ</p>
+          <div class="card-price">۱۶۵٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/blue-haway.png" alt="آیس لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">بلو هاوایی</div>
+          <p class="card-desc">آناناس، بلوکاراسائو، نارگیل، یخ</p>
+          <div class="card-price">۱۴۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- تب: نوشیدنی گرم -->
+  <div id="hot-drinks" class="tab-content">
+    <div class="menu-grid">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="چای" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">چای</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۷۰,۰۰۰-۸۵,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="دمنوش" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">دمنوش</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۷۰,۰۰۰-۸۵,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="چای ماسالا" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">چای ماسالا</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="چای کرک" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">چای کرک</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=85" alt="چای کرک زعفرانی" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">چای کرک زعفرانی</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="img/chocolate.png" alt="هات چاکلت" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">هات چاکلت</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۱۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="img/chocolate.png" alt="پینک چاکلت" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">پینک چاکلت</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="img/chocolate.png" alt="وایت چاکلت" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">وایت چاکلت</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۰۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    <article class="card">
+        <img src="img/chocolate.png" alt="ماچا لاته" class="card-img" loading="lazy">
+        <div class="card-body">
+          <div class="card-title">ماچا لاته</div>
+          <p class="card-desc">ترکیب چای سیاه، ادویه‌های گرم و شیر تازه</p>
+          <div class="card-price">۱۵۰٬۰۰۰ تومان</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>
+  <p>© ۱۴۰۴ Caffè Carmo – همه حقوق محفوظ است.</p>
+</footer>
+
+<script>
+  // تنظیم انیمیشن ورود تب‌ها
+  document.querySelectorAll('.tab-button').forEach((btn, i) => {
+    btn.style.setProperty('--i', i);
+  });
+
+  // کلیک روی تب + اسکرول نرم
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const tabId = button.getAttribute('data-tab');
+      const targetContent = document.getElementById(tabId);
+
+      // حذف active از همه
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      // اضافه کردن active
+      button.classList.add('active');
+      targetContent.classList.add('active');
+
+      // اسکرول نرم به محتوا (با فاصله از بالا)
+      setTimeout(() => {
+        const offsetTop = targetContent.offsetTop - 120; // 120px فاصله از بالا
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }, 100); // کمی تأخیر برای رندر شدن محتوا
+    });
+  });
+
+  document.querySelectorAll('.letter').forEach((letter, i) => {
+    letter.style.setProperty('--i', i);
+  });
+</script>
+
+</body>
+</html>
