@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&family=Yekan+Bakh:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     :root {
@@ -129,35 +130,28 @@
       padding: 0 1rem;
     }
 
+    /* تب‌های افقی */
     .tabs-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* کلیدی! */
-      gap: 1rem;
-      justify-content: center;
-      padding: 1rem 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      margin: 10px 0;
+    }
+
+    .tabs-scroll {
+      display: flex;
+      gap: 10px;
     }
 
     .tab-button {
-      width: 100%;                     /* عرض کامل ستون */
-      min-height: 56px;                /* ارتفاع یکسان */
-      background: rgba(40, 40, 40, 0.7);
-      border: 2px solid transparent;
-      color: var(--light);
-      font-family: 'Yekan Bakh', sans-serif;
-      font-weight: 600;
-      font-size: 1.05rem;
-      padding: 0.8rem 1rem;
-      border-radius: 50px;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      text-align: center;
+      transition: 0.3s;
+      backdrop-filter: blur(6px);
     }
 
     .tab-button span {
@@ -203,11 +197,10 @@
     .tab-button:hover::after { width: 60%; }
 
     /* فعال */
+
     .tab-button.active {
-      color: #FFFFFF;
-      background: rgba(212, 175, 55, 0.2);
-      border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      background: #c9a65a;
+      color: #111;
     }
 
     .tab-button.active::after {
@@ -242,34 +235,16 @@
 
     /* ===== کارت‌های منو ===== */
     /* ===== کارت‌های منو - نسخه جدید ===== */
-    .menu-grid {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(2, 1fr); /* همیشه 2 ستون */
-      justify-content: center;
-      padding: 0 1.5rem;
-      margin: 0 auto;
-      max-width: 1400px;
+
+    .menu-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
     }
 
-    .card {
-      background: var(--card);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px var(--shadow);
-      transition: all .4s ease;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      min-height: 420px; /* ارتفاع یکسان */
-    }
-
-    .card:hover {
-      transform: translateY(-12px);
-      box-shadow:
-        0 25px 50px rgba(0,0,0,.45),
-        0 0 35px rgba(212, 175, 55, 0.2);
-      border-color: var(--accent);
-    }
 
     .card-img {
       height: 260px; /* تصویر بزرگ‌تر */
@@ -283,70 +258,115 @@
     }
 
     .card-body {
-      padding: 1.6rem 1.8rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      justify-content: space-between;
+      padding: 6px 8px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      height: 90px; /* 👈 کل فضای توضیحات */
     }
 
     .card-title {
-      font-weight: 700;
-      font-size: 1.45rem;
-      color: #FFFFFF;
-      text-shadow: 0 1px 4px rgba(0,0,0,.4);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+      color: #f4f4f4;
     }
 
     .card-desc {
-      font-size: 1.05rem;
-      color: var(--light);
-      line-height: 1.7;
-      flex-grow: 1;
+      font-size: 0.7rem;
+      line-height: 1.1;
+      color: #ddd;
+      margin-bottom: 4px;
     }
 
     .card-price {
-      font-family: 'Yekan Bakh', sans-serif;
-      font-weight: 700;
-      font-size: 1.55rem;
-      color: var(--accent);
-      align-self: flex-end;
-      text-shadow: 0 1px 5px rgba(0,0,0,.5);
+      font-size: 0.75rem;
+      color: #c9a65a;
+      font-weight: bold;
     }
 
+    .menu-card {
+      flex: 0 0 130px; /* عرض کارت */
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      overflow: hidden;
+      color: white;
+      scroll-snap-align: start;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column; /* 👈 عکس بالا، متن پایین */
+    }
+
+    .menu-card:active,
+    .menu-card:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-card .text {
+      position: absolute;
+      bottom: 12px;
+      left: 10px;
+      color: #fff;
+      z-index: 2;
+    }
+    .menu-card .text p {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8; /* 👈 شفافیت برای دید بهتر روی متن */
+      transition: opacity 0.3s ease;
+    }
+
+    .menu-card h3 {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      margin: 0;
+      font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 0;
+      border-radius: 0 0 14px 14px;
+    }
+
+    .menu-scroll::-webkit-scrollbar,
+    .tabs-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-scroll, .tabs-wrapper {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+
     /* ===== کارت‌ها در موبایل (بهینه) ===== */
-    @media (max-width: 768px) {
-      .menu-grid {
-        gap: 1.8rem;
-        padding: 0 1rem;
+    @media (max-width: 600px) {
+      .menu-card {
+        flex: 0 0 120px;
       }
-
-      .card {
-        min-height: 460px;           /* ارتفاع یکسان و کافی */
-        border-radius: 20px;
+      .menu-card img.card-img {
+        height: 120px;
       }
-
-      .card-img {
-        height: 240px;               /* عکس بزرگ و واضح */
-        object-fit: cover;
-        object-position: center;
-      }
-
       .card-body {
-        padding: 1.4rem 1.6rem;
-        gap: 0.7rem;
+        height: 130px;
       }
-
       .card-title {
-        font-size: 1.35rem;
-        line-height: 1.4;
+        font-size: 0.8rem;
       }
-
       .card-desc {
-        font-size: 1rem;
-        line-height: 1.6;
+        font-size: 0.65rem;
       }
-
       .card-price {
-        font-size: 1.45rem;
+        font-size: 0.7rem;
       }
     }
 
@@ -359,6 +379,29 @@
       font-size: .9rem;
       border-top: 1px solid var(--border);
     }
+
+    .contact-footer {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 12px 0;
+      border-top: 1px solid rgba(201, 166, 90, 0.3); /* خط طلایی ظریف */
+    }
+
+
+
+    .footer-icon {
+      color: #c9a65a; /* طلایی برند */
+      font-size: 22px;
+      transition: 0.3s ease;
+    }
+
+    .footer-icon:hover {
+      color: #fff;
+      transform: scale(1.2);
+    }
+
 
     /* ===== ریسپانسیو ===== */
     @media (max-width: 768px) {
@@ -429,25 +472,31 @@
       width: 100%;
       max-width: 100%;
     }
-    
+
     .en-text {
       display: inline-block;
       white-space: nowrap;
       min-width: 0;
     }
-    
+
     @media (max-width: 380px) {
       .cafe-title { font-size: 2.4rem !important; }
     }
-    
+
     @media (max-width: 340px) {
       .cafe-title { font-size: 2.1rem !important; }
     }
-    
+
+    @media (min-width: 768px) {
+      .contact-footer {
+        gap: 50px;
+      }
+    }
+
+
   </style>
 </head>
 <body>
-
 <header>
   <div class="logo-container">
     <img src="img/logo.jpg" alt="Caffè Carmo Logo" class="logo">
@@ -464,20 +513,22 @@
 </header>
 
 <!-- تب‌ها -->
-<div class="tabs">
-  <button class="tab-button" data-tab="shake">شیک</button>
-  <button class="tab-button" data-tab="espersso">اسپرسو</button>
-  <button class="tab-button" data-tab="espersso-brand">اسپرسو (برند)</button>
-  <button class="tab-button" data-tab="hot-coffee">بار گرم (برپایه اسپرسو)</button>
-  <button class="tab-button" data-tab="ice-coffee">بار سرد (برپایه اسپرسو)</button>
-  <button class="tab-button" data-tab="hot-drinks">بار گرم</button>
-  <button class="tab-button" data-tab="cold-drinks">ماکتیل</button>
+<div class="tabs-wrapper">
+  <div class="tabs-scroll">
+    <button class="tab-button" data-tab="shake">شیک</button>
+    <button class="tab-button" data-tab="espersso">اسپرسو</button>
+    <button class="tab-button" data-tab="espersso-brand">اسپرسو (برند)</button>
+    <button class="tab-button" data-tab="hot-coffee">بار گرم (برپایه اسپرسو)</button>
+    <button class="tab-button" data-tab="ice-coffee">بار سرد (برپایه اسپرسو)</button>
+    <button class="tab-button" data-tab="hot-drinks">بار گرم</button>
+    <button class="tab-button" data-tab="cold-drinks">ماکتیل</button>
+  </div>
 </div>
 
 <main>
   <div id="shake" class="tab-content">
-    <div class="menu-grid">
-      <article class="card">
+    <div class="menu-scroll">
+      <article class="menu-card">
         <img src="img/shakes.jpg" alt="شیک نوتلا" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">شیک نوتلا</div>
@@ -486,7 +537,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/shakes.jpg" alt="شیک اورئو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">شیک اورئو</div>
@@ -495,7 +546,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/shakes.jpg" alt="شیک شکلات" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">شیک شکلات</div>
@@ -504,7 +555,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/shakes.jpg" alt="شیک بادام زمینی" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">شیک بادام زمینی</div>
@@ -518,8 +569,8 @@
 
   <!-- تب: قهوه داغ -->
   <div id="espersso" class="tab-content">
-    <div class="menu-grid">
-      <article class="card">
+    <div class="menu-scroll">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="اسپرسو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">۱۰۰ روبوستا</div>
@@ -528,7 +579,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="اسپرسو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">۸۰ روبوستا</div>
@@ -537,7 +588,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="اسپرسو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">۷۰ روبوستا</div>
@@ -545,8 +596,7 @@
           <div class="card-price">۷۵ - ۶۵ تومان</div>
         </div>
       </article>
-
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="اسپرسو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">۵۰ روبوستا</div>
@@ -558,9 +608,9 @@
   </div>
 
   <div id="hot-coffee" class="tab-content">
-    <div class="menu-grid">
+    <div class="menu-scroll">
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/hot-coffee.png" alt="کاپوچینو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">کاپوچینو</div>
@@ -569,7 +619,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/hot-coffee.png" alt="لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">لاته</div>
@@ -578,7 +628,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/hot-coffee.png" alt="آمریکانو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آمریکانو</div>
@@ -587,16 +637,16 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/hot-coffee.png" alt="ماکیاتو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">ماکیاتو</div>
           <p class="card-desc">اسپرسو با شیر گرم و لایه نازک فوم مخملی</p>
           <div class="card-price">۱۲۰ تومان</div>
         </div>
-        </article>
+      </article>
 
-        <article class="card">
+      <article class="menu-card">
         <img src="img/hot-coffee.png" alt="موکا" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">موکا</div>
@@ -608,8 +658,8 @@
   </div>
 
   <div id="espersso-brand" class="tab-content">
-    <div class="menu-grid">
-      <article class="card">
+    <div class="menu-scroll">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="Joker" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">جوکر | Joker</div>
@@ -618,7 +668,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="کاپوچینو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">مامالوچیا | Mamma Lucia</div>
@@ -627,7 +677,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="Amico" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آمیکوآبی | Amico Blue</div>
@@ -636,7 +686,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="Amico" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آمیکو قرمز | Amico Red</div>
@@ -644,8 +694,7 @@
           <div class="card-price">۱۱۰ تومان</div>
         </div>
       </article>
-
-      <article class="card">
+      <article class="menu-card">
         <img src="img/espersso.png" alt="کاپوچینو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">هاوایی زرد | Haway Yellow</div>
@@ -657,9 +706,9 @@
   </div>
 
   <div id="ice-coffee" class="tab-content">
-    <div class="menu-grid">
+    <div class="menu-scroll">
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آیس آمریکانو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آیس آمریکانو</div>
@@ -668,7 +717,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آیس لاته</div>
@@ -677,7 +726,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آیس لاته زعفرانی" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آیس لاته زعفرانی</div>
@@ -686,7 +735,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آیس موکا" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آیس موکا</div>
@@ -695,7 +744,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آیس ماچا" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آیس ماچا</div>
@@ -704,7 +753,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="فراپاچینو کارامل" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">فراپاچینو کارامل</div>
@@ -713,7 +762,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="پینک اسپرسو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">پینک اسپرسو</div>
@@ -722,7 +771,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/ice-coffee.png" alt="آفوگاتو" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">آفوگاتو</div>
@@ -735,8 +784,8 @@
 
   <!-- تب: ماکتیل -->
   <div id="cold-drinks" class="tab-content">
-    <div class="menu-grid">
-      <article class="card">
+    <div class="menu-scroll">
+      <article class="menu-card">
         <img src="img/mohito.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">موهیتو</div>
@@ -745,7 +794,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/red-mohito.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">رد موهیتو</div>
@@ -753,8 +802,7 @@
           <div class="card-price">۱۵۰ تومان</div>
         </div>
       </article>
-
-      <article class="card">
+      <article class="menu-card">
         <img src="img/orange-blackberry.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">اورنج بلک بری</div>
@@ -763,7 +811,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/limonade.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">لیموناد</div>
@@ -772,7 +820,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/blue-haway.png" alt="آیس لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">بلو هاوایی</div>
@@ -785,8 +833,8 @@
 
   <!-- تب: نوشیدنی گرم -->
   <div id="hot-drinks" class="tab-content">
-    <div class="menu-grid">
-      <article class="card">
+    <div class="menu-scroll">
+      <article class="menu-card">
         <img src="img/tea.png" alt="چای" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">چای</div>
@@ -795,7 +843,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/tea.png" alt="دمنوش" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">دمنوش</div>
@@ -804,7 +852,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="menu-card">
         <img src="img/tea.png" alt="چای ماسالا" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">چای ماسالا</div>
@@ -813,7 +861,7 @@
         </div>
       </article>
 
-    <article class="card">
+      <article class="menu-card">
         <img src="img/tea.png" alt="چای کرک" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">چای کرک</div>
@@ -822,7 +870,7 @@
         </div>
       </article>
 
-    <article class="card">
+      <article class="menu-card">
         <img src="img/tea.png" alt="چای کرک زعفرانی" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">چای کرک زعفرانی</div>
@@ -831,7 +879,7 @@
         </div>
       </article>
 
-    <article class="card">
+      <article class="menu-card">
         <img src="img/chocolate.png" alt="هات چاکلت" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">هات چاکلت</div>
@@ -840,7 +888,7 @@
         </div>
       </article>
 
-    <article class="card">
+      <article class="menu-card">
         <img src="img/chocolate.png" alt="پینک چاکلت" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">پینک چاکلت</div>
@@ -849,7 +897,7 @@
         </div>
       </article>
 
-    <article class="card">
+      <article class="menu-card">
         <img src="img/chocolate.png" alt="وایت چاکلت" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">وایت چاکلت</div>
@@ -857,8 +905,7 @@
           <div class="card-price">۱۰۰ تومان</div>
         </div>
       </article>
-
-    <article class="card">
+      <article class="menu-card">
         <img src="img/chocolate.png" alt="ماچا لاته" class="card-img" loading="lazy">
         <div class="card-body">
           <div class="card-title">ماچا لاته</div>
@@ -872,9 +919,18 @@
 
 </main>
 
-<footer>
-  <p>© Cafe Carmo 2025</p>
+<footer class="contact-footer">
+  <a href="https://www.instagram.com/caffecarmo?igsh=YzdjdWxjZ2poOWJj" target="_blank" class="footer-icon">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="tel:+989364471068" class="footer-icon">
+    <i class="fas fa-phone"></i>
+  </a>
+  <a href="https://maps.app.goo.gl/NjuVWM7vS5osbNRX8" target="_blank" class="footer-icon">
+    <i class="fas fa-map-marker-alt"></i>
+  </a>
 </footer>
+
 
 <script>
   // تنظیم انیمیشن ورود تب‌ها
