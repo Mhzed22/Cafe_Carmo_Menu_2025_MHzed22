@@ -463,9 +463,6 @@
       50% { width: 80%; opacity: 1; }
     }
 
-    @media (max-width: 480px) {
-      .cafe-title { font-size: 2.4rem; }
-    }
     .cafe-title {
       white-space: nowrap;
       overflow: hidden;
@@ -481,12 +478,14 @@
       min-width: 0;
     }
 
-    @media (max-width: 380px) {
-      .cafe-title { font-size: 2.0rem !important; }
-    }
-
-    @media (max-width: 340px) {
-      .cafe-title { font-size: 2.1rem !important; }
+    @media (max-width: 480px) {
+      .cafe-title {
+        font-size: 1.8rem;   /* کوچکتر شدن روی آیفون */
+        white-space: normal !important;  /* اجازه چند خطی شدن */
+        text-overflow: unset !important;
+        overflow: visible !important;
+        line-height: 1.2;
+      }
     }
 
     @media (min-width: 768px) {
